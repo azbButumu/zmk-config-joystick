@@ -35,9 +35,6 @@ jobs:
         run: west zephyr-export
       - name: West Build (Joystick)
         run: west build -s zmk/app -b xiao_ble -- -DSHIELD=joystick -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-      - name: Joystick DTS File
-        if: ${{ always() }}
-        run: cat -n build/zephyr/xiao_ble.dts.pre.tmp
       - name: Joystick Kconfig file
         run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
       - name: Rename zmk.uf2
