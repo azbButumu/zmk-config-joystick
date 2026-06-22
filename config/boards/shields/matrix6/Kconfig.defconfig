@@ -1,0 +1,16 @@
+if SHIELD_MATRIX6
+
+config ZMK_KEYBOARD_NAME
+    default "Matrix6"
+
+# USB有線接続のみ使用するため、BLEを無効化する
+config BT
+    default n
+
+config ZMK_BLE
+    default n
+
+config ZMK_USB
+    default y
+
+endif # SHIELD_MATRIX6

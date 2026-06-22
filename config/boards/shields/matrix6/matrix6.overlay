@@ -1,0 +1,42 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+    };
+
+    // ダイオードの方向: col2row(列→ダイオード→行 の向きで電流が流れる)
+    // 配線時は、各ダイオードのカソード(線が描いてある側)を行(ROW)側に向けてください
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+
+        // 列(COL)はMCU出力。GPIO_ACTIVE_HIGHのみでOK
+        col-gpios
+            = <&xiao_d 2 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 3 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 4 GPIO_ACTIVE_HIGH>
+            ;
+
+        // 行(ROW)はMCU入力。プルダウンを併用する
+        row-gpios
+            = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <3>;
+        rows = <2>;
+
+        // 物理配置(2行3列、テンキー風):
+        //  1  2  3   <- ROW0 (COL0 COL1 COL2)
+        //  4  5  6   <- ROW1 (COL0 COL1 COL2)
+        map = <
+            RC(0,0) RC(0,1) RC(0,2)
+            RC(1,0) RC(1,1) RC(1,2)
+        >;
+    };
+};

@@ -1,0 +1,10 @@
+file_format: "1"
+id: matrix6
+name: Matrix6
+type: shield
+url: ""
+requires: [xiao_ble]
+features:
+  - keys
+siblings:
+  - matrix6
